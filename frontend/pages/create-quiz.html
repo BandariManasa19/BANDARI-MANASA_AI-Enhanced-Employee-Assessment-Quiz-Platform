@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Quiz - AssessAI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-gradient-primary fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="admin-dashboard.html">AssessAI - Admin</a>
+            <button class="btn btn-outline-light btn-sm" id="logoutBtn">Logout</button>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container py-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Create New Quiz</h2>
+                <a href="admin-dashboard.html" class="btn btn-outline-secondary">Back</a>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <form id="createQuizForm">
+                        <div class="mb-3">
+                            <label class="form-label">Quiz Title</label>
+                            <input type="text" class="form-control" id="title" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Category</label>
+                            <select class="form-select" id="category" required>
+                                <option value="">Select Category</option>
+                                <option value="Technical">Technical</option>
+                                <option value="Soft Skills">Soft Skills</option>
+                                <option value="Management">Management</option>
+                                <option value="Compliance">Compliance</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" id="description" rows="3"></textarea>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Duration (minutes)</label>
+                                <input type="number" class="form-control" id="duration" value="30" min="5" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Total Questions</label>
+                                <input type="number" class="form-control" id="totalQuestions" value="5" min="1" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Difficulty</label>
+                            <select class="form-select" id="difficulty">
+                                <option value="Easy">Easy</option>
+                                <option value="Medium" selected>Medium</option>
+                                <option value="Hard">Hard</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Create Quiz</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/storage.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = getCurrentUser();
+            if (!user || user.role !== 'admin') {
+                window.location.href = 'admin-login.html';
+                return;
+            }
+
+            document.getElementById('createQuizForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const quiz = {
+                    id: `quiz-${Date.now()}`,
+                    title: document.getElementById('title').value,
+                    category: document.getElementById('category').value,
+                    description: document.getElementById('description').value,
+                    duration: parseInt(document.getElementById('duration').value),
+                    totalQuestions: parseInt(document.getElementById('totalQuestions').value),
+                    difficulty: document.getElementById('difficulty').value,
+                    createdBy: user.id,
+                    createdAt: new Date().toISOString(),
+                    isActive: true
+                };
+
+                addQuiz(quiz);
+                alert('Quiz created successfully! Add questions to it.');
+                window.location.href = `add-question.html?quizId=${quiz.id}`;
+            });
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            setCurrentUser(null);
+            window.location.href = 'admin-login.html';
+        });
+    </script>
+</body>
+</html>

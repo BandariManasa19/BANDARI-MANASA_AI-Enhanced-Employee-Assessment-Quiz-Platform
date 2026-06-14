@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Questions - AssessAI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-gradient-primary fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="admin-dashboard.html">AssessAI - Admin</a>
+            <button class="btn btn-outline-light btn-sm" id="logoutBtn">Logout</button>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container py-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Add Questions</h2>
+                <a href="admin-dashboard.html" class="btn btn-outline-secondary">Back</a>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <form id="questionForm">
+                        <div class="mb-3">
+                            <label class="form-label">Question</label>
+                            <textarea class="form-control" id="question" rows="2" required></textarea>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Option A</label>
+                                <input type="text" class="form-control" id="optionA" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Option B</label>
+                                <input type="text" class="form-control" id="optionB" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Option C</label>
+                                <input type="text" class="form-control" id="optionC" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Option D</label>
+                                <input type="text" class="form-control" id="optionD" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Correct Answer</label>
+                            <select class="form-select" id="correctAnswer" required>
+                                <option value="A">Option A</option>
+                                <option value="B">Option B</option>
+                                <option value="C">Option C</option>
+                                <option value="D">Option D</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Add Question</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="questionsList" class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Existing Questions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="text-center py-3">
+                        <div class="spinner-border"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/storage.js"></script>
+    <script>
+        let quizId = '';
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = getCurrentUser();
+            if (!user || user.role !== 'admin') {
+                window.location.href = 'admin-login.html';
+                return;
+            }
+
+            const params = new URLSearchParams(window.location.search);
+            quizId = params.get('quizId');
+            
+            loadQuestions();
+            
+            document.getElementById('questionForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const question = {
+                    id: `q-${Date.now()}`,
+                    quizId: quizId,
+                    question: document.getElementById('question').value,
+                    optionA: document.getElementById('optionA').value,
+                    optionB: document.getElementById('optionB').value,
+                    optionC: document.getElementById('optionC').value,
+                    optionD: document.getElementById('optionD').value,
+                    correctAnswer: document.getElementById('correctAnswer').value,
+                    difficulty: 'Medium'
+                };
+
+                addQuestion(question);
+                document.getElementById('questionForm').reset();
+                loadQuestions();
+            });
+        });
+
+        function loadQuestions() {
+            const questions = getQuestionsByQuizId(quizId);
+            const container = document.querySelector('#questionsList .card-body');
+            
+            if (questions.length === 0) {
+                container.innerHTML = '<p class="text-muted">No questions added yet</p>';
+                return;
+            }
+
+            let html = '<ul class="list-group">';
+            questions.forEach((q, idx) => {
+                html += `
+                    <li class="list-group-item">
+                        <strong>${idx + 1}.</strong> ${q.question.substring(0, 60)}...
+                    </li>
+                `;
+            });
+            html += '</ul>';
+            container.innerHTML = html;
+        }
+
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            setCurrentUser(null);
+            window.location.href = 'admin-login.html';
+        });
+    </script>
+</body>
+</html>

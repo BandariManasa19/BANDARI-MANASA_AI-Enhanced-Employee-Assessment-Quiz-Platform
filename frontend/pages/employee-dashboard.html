@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard - AssessAI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gradient-primary fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <svg width="24" height="24" class="d-inline-block me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                </svg>
+                AssessAI
+            </a>
+            <div class="d-flex align-items-center">
+                <span class="navbar-text me-3" id="userName">Welcome, User!</span>
+                <button class="btn btn-outline-light btn-sm" id="logoutBtn">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav id="sidebar" class="sidebar col-lg-2 d-none d-lg-block">
+                <div class="position-sticky pt-4">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="employee-dashboard.html">
+                                <svg width="20" height="20" class="me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                                </svg>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="all-results.html">
+                                <svg width="20" height="20" class="me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                </svg>
+                                My Results
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="ml-insights.html">
+                                <svg width="20" height="20" class="me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                                </svg>
+                                AI Insights
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="main-content col-lg-10">
+                <div class="pt-4">
+                    <h2 class="mb-4">Welcome back, <span id="welcomeName">User</span>! 👋</h2>
+
+                    <!-- Stats Cards -->
+                    <div class="row g-4 mb-4">
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="card card-stats">
+                                <div class="card-body">
+                                    <h6 class="text-muted">Total Assessments</h6>
+                                    <h2 class="mb-0" id="totalAssessments">0</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="card card-stats">
+                                <div class="card-body">
+                                    <h6 class="text-muted">Latest Score</h6>
+                                    <h2 class="mb-0" id="latestScore">0%</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="card card-stats">
+                                <div class="card-body">
+                                    <h6 class="text-muted">Average Accuracy</h6>
+                                    <h2 class="mb-0" id="avgAccuracy">0%</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="card card-stats">
+                                <div class="card-body">
+                                    <h6 class="text-muted">AI Prediction</h6>
+                                    <span class="badge" id="predictionBadge">N/A</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Available Quizzes -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0">Available Quizzes</h5>
+                        </div>
+                        <div class="card-body" id="quizzesList">
+                            <div class="text-center py-4">
+                                <div class="spinner-border"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/storage.js"></script>
+    <script src="../js/ml.js"></script>
+    <script src="../js/feedback.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initEmployeeDashboard();
+        });
+        
+        function initEmployeeDashboard() {
+            const user = getCurrentUser();
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            document.getElementById('userName').textContent = user.name;
+            document.getElementById('welcomeName').textContent = user.name.split(' ')[0];
+            
+            // Load stats
+            const attempts = getAttemptsByEmployee(user.id);
+            document.getElementById('totalAssessments').textContent = attempts.length;
+            
+            // Load quizzes
+            loadQuizzes(user.id, attempts);
+        }
+        
+        function loadQuizzes(userId, attempts) {
+            const quizzes = getQuizzes().filter(q => q.isActive);
+            const container = document.getElementById('quizzesList');
+            
+            if (quizzes.length === 0) {
+                container.innerHTML = '<p class="text-muted">No quizzes available</p>';
+                return;
+            }
+            
+            let html = '<div class="row g-3">';
+            quizzes.forEach(quiz => {
+                const quizAttempts = attempts.filter(a => a.quizId === quiz.id);
+                html += `
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">${quiz.title}</h5>
+                                <span class="badge bg-primary mb-2">${quiz.category}</span>
+                                <p class="card-text small">${quiz.totalQuestions} questions • ${quiz.duration} min</p>
+                                <button class="btn btn-primary w-100" onclick="startQuiz('${quiz.id}')">
+                                    ${quizAttempts.length > 0 ? 'Retake Quiz' : 'Start Quiz'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+        
+        function startQuiz(quizId) {
+            window.location.href = `quiz.html?quizId=${quizId}`;
+        }
+        
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            setCurrentUser(null);
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>

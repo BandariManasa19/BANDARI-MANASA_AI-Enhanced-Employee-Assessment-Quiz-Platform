@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Result - AssessAI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-gradient-primary fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="employee-dashboard.html">AssessAI - Results</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container py-4">
+            <div id="resultContent" class="text-center py-5">
+                <div class="spinner-border"></div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/storage.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const params = new URLSearchParams(window.location.search);
+            const attemptId = params.get('attemptId');
+            
+            if (!attemptId) {
+                window.location.href = 'employee-dashboard.html';
+                return;
+            }
+            
+            showResults(attemptId);
+        });
+
+        function showResults(attemptId) {
+            const attempt = getAttempts().find(a => a.id === attemptId);
+            const quiz = findQuizById(attempt?.quizId);
+            const prediction = getPredictions().find(p => p.attemptId === attemptId);
+            const feedback = getFeedbacks().find(f => f.attemptId === attemptId);
+            
+            if (!attempt || !quiz) {
+                document.getElementById('resultContent').innerHTML = '<p class="text-danger">Result not found</p>';
+                return;
+            }
+
+            const scorePct = Math.round((attempt.score / attempt.totalQuestions) * 100);
+            const mins = Math.floor(attempt.timeTaken / 60);
+            const secs = attempt.timeTaken % 60;
+
+            let html = `
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2>Quiz Completed!</h2>
+                        <h3 class="text-success">${scorePct}%</h3>
+                        <p>${attempt.score}/${attempt.totalQuestions} correct • ${mins}:${secs.toString().padStart(2, '0')} time taken</p>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5>AI Prediction</h5>
+                        <span class="badge bg-info">${prediction?.performanceCategory || 'N/A'}</span>
+                        <p class="mt-2">Confidence: ${prediction ? Math.round(prediction.confidence * 100) : 0}%</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5>AI Feedback</h5>
+                        <p class="text-muted">${feedback?.content || 'No feedback available'}</p>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <a href="employee-dashboard.html" class="btn btn-primary">Back to Dashboard</a>
+                </div>
+            `;
+            
+            document.getElementById('resultContent').innerHTML = html;
+        }
+    </script>
+</body>
+</html>

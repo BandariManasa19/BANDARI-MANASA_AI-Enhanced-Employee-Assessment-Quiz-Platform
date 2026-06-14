@@ -1,0 +1,25 @@
+# AI-Enhanced Employee Quiz & Assessment Platform
+# Python Backend Dependencies
+
+# Flask Framework
+Flask==3.0.0
+flask-cors==4.0.0
+
+# MySQL Database
+mysql-connector-python==8.2.0
+
+# Machine Learning
+scikit-learn==1.3.2
+pandas==2.1.4
+numpy==1.26.2
+joblib==1.3.2
+
+# Generative AI
+google-generativeai==0.3.2
+
+# Utilities
+python-dotenv==1.0.0
+Werkzeug==3.0.1
+
+# Development
+pytest==7.4.3

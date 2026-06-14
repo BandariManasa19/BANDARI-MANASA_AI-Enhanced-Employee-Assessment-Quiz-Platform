@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Registration - AssessAI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-light">
+    <div class="container">
+        <div class="row justify-content-center min-vh-100 align-items-center py-5">
+            <div class="col-md-8 col-lg-6">
+                <div class="text-center mb-5">
+                    <svg width="64" height="64" class="text-primary mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                    </svg>
+                    <h1 class="h3 fw-bold">Employee Registration</h1>
+                    <p class="text-muted">Create your employee account</p>
+                </div>
+
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <form id="registerForm">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Employee ID</label>
+                                    <input type="text" class="form-control" id="employeeId" placeholder="e.g., EMP001" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="name" placeholder="Enter your name" required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="email" placeholder="you@company.com" required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Department</label>
+                                    <select class="form-select" id="department" required>
+                                        <option value="">Select Department</option>
+                                        <option value="Engineering">Engineering</option>
+                                        <option value="Product">Product</option>
+                                        <option value="Design">Design</option>
+                                        <option value="Marketing">Marketing</option>
+                                        <option value="Sales">Sales</option>
+                                        <option value="Human Resources">Human Resources</option>
+                                        <option value="Finance">Finance</option>
+                                        <option value="Operations">Operations</option>
+                                        <option value="Customer Support">Customer Support</option>
+                                        <option value="Data Science">Data Science</option>
+                                        <option value="Quality Assurance">Quality Assurance</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="password" placeholder="Min 6 characters" required minlength="6">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Confirm Password</label>
+                                    <input type="password" class="form-control" id="confirmPassword" placeholder="Re-enter password" required>
+                                </div>
+                            </div>
+
+                            <div id="errorMessage" class="alert alert-danger d-none mt-3"></div>
+
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg" id="registerBtn">
+                                    Create Account
+                                </button>
+                            </div>
+                        </form>
+
+                        <div class="text-center mt-4">
+                            <a href="login.html" class="text-decoration-none">Already have an account? Sign in</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/storage.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initRegisterPage();
+        });
+    </script>
+</body>
+</html>

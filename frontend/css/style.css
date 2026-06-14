@@ -1,0 +1,193 @@
+/* AI-Enhanced Employee Quiz & Assessment Platform */
+/* Custom styles for Bootstrap 5 */
+
+:root {
+    --primary-color: #6366f1;
+    --secondary-color: #8b5cf6;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --info-color: #06b6d4;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #f8fafc;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.sidebar {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    bottom: 0;
+    width: 250px;
+    background: #fff;
+    border-right: 1px solid #e2e8f0;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+    z-index: 1000;
+}
+
+.sidebar.hide {
+    transform: translateX(-100%);
+}
+
+.main-content {
+    margin-left: 250px;
+    margin-top: 56px;
+    padding: 1.5rem;
+    transition: margin-left 0.3s ease;
+}
+
+@media (max-width: 991.98px) {
+    .main-content {
+        margin-left: 0;
+    }
+    
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    
+    .sidebar.show {
+        transform: translateX(0);
+    }
+}
+
+.card {
+    border: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+}
+
+.card-stats {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-stats:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+}
+
+.bg-gradient-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+}
+
+.bg-gradient-success {
+    background: linear-gradient(135deg, var(--success-color), #059669);
+}
+
+.bg-gradient-warning {
+    background: linear-gradient(135deg, var(--warning-color), #d97706);
+}
+
+.bg-gradient-danger {
+    background: linear-gradient(135deg, var(--danger-color), #dc2626);
+}
+
+.progress-bar {
+    border-radius: 0.5rem;
+}
+
+.question-card {
+    transition: border-color 0.2s ease;
+}
+
+.question-card.selected {
+    border-color: var(--primary-color);
+    background-color: #f0fdf4;
+}
+
+.answer-option {
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.answer-option:hover {
+    background-color: #f1f5f9;
+}
+
+.answer-option.selected {
+    background-color: #e0e7ff;
+    border-color: var(--primary-color) !important;
+}
+
+.timer-warning {
+    color: #ef4444 !important;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Landing page styles */
+.landing-hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #1e293b 100%);
+}
+
+.landing-card {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.feature-icon {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-size: 1.5rem;
+}
+
+/* Dashboard specific styles */
+.trend-chart {
+    height: 200px;
+}
+
+.prediction-badge {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+}
+
+.performance-high {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.performance-average {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.performance-improvement {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+    .sidebar {
+        width: 100%;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
